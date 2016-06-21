@@ -93,7 +93,9 @@ def render_xlscript(xlscript='',
     if django_response:
         from django.http import HttpResponse
         _response = HttpResponse(response.read())
-        _response._headers = dict(response.headers)
+        for k in response.headers:
+            if k in {'Content-Type', 'Content-Disposition'}:
+                _response[k] = response.headers[k]
         response = _response
 
     return response
