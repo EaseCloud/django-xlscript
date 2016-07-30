@@ -100,6 +100,27 @@ def render_xlscript(xlscript='',
 
     return response
 
+
+def read_excel(filename,
+               api_url='http://xlsapi.easecloud.cn',
+               config=None):
+    content_type, body = encode_multipart_formdata(
+        fields={
+            'action': 'read',
+            'config': json.dumps(config or {}),
+        }.items(),
+        files=[('template', (filename,))],
+    )
+
+    request = Request(
+        api_url,
+        data=body,
+        headers={'Content-Type': content_type}
+    )
+    response = urlopen(request)
+
+    return json.loads(response.read().decode())
+
 # def render_excel(xlscript='',
 #                  template=(),
 #                  api_url='http://xlsapi.easecloud.cn',
