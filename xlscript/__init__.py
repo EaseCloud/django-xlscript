@@ -109,7 +109,7 @@ def read_excel(filename,
             'action': 'read',
             'config': json.dumps(config or {}),
         }.items(),
-        files=[('template', (filename,))],
+        files=[('template', filename)],
     )
 
     request = Request(
