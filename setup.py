@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='xlscript',
     packages=['xlscript'],
-    version='0.0.7',
+    version='0.0.8',
     description='Python SDK for phpexcel-api',
     author='EaseCloud Co. Ltd.',
     author_email='57082212@qq.com',
