@@ -7,7 +7,10 @@ import mimetypes
 
 
 def get_content_type(file_path=None):
-    if not file_path or not os.path.isfile(file_path):
+    # if a file-like object is passed in, use its name instead.
+    if hasattr(file_path, 'read') and hasattr(file_path, 'name'):
+        file_path = file_path.name
+    elif not file_path or not os.path.isfile(file_path):
         return 'application/octet-stream'
     return mimetypes.guess_type(file_path)[0] or 'application/octet-stream'
 
@@ -32,9 +35,10 @@ def encode_multipart_formdata(fields, files=()):
 
     for (key, file) in files:
         lines.append('--' + boundary)
+        print(file.name)
         lines.append(
             'Content-Disposition: form-data; name="%s"; filename=%s' %
-            (key, os.path.basename(file))
+            (key, hasattr(file, 'name') and file.name or os.path.basename(file))
         )
         if isinstance(file, bytes):
             lines.append('Content-Type: %s' % get_content_type(file))
