@@ -35,7 +35,6 @@ def encode_multipart_formdata(fields, files=()):
 
     for (key, file) in files:
         lines.append('--' + boundary)
-        print(file.name)
         lines.append(
             'Content-Disposition: form-data; name="%s"; filename=%s' %
             (key, hasattr(file, 'name') and file.name or os.path.basename(file))
